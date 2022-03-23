@@ -1,0 +1,32 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(255, 255, 255);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+.panel-color {
+  background-color: rgb(238, 238, 238);
+}
+
+.action-color {
+  background-color: rgb(92, 158, 173);
+}
+
+/*
+kolory
+238, 238, 238 - szary na panele
+92, 158, 173 - jasny na akcje
+bały tło
+50, 98, 115 - ciemny niebiesty do obczajenia
+
+
+*/

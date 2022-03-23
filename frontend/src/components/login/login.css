@@ -1,0 +1,29 @@
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  height: 100vh;
+}
+
+.login-box {    
+  grid-column-start: 2;
+  grid-row: 2;  
+  align-content: stretch;
+  justify-self: center;
+  align-self: center;
+  padding: 40px;
+  margin: 15px;
+  display: block;
+
+}
+
+.login-box #login #password {
+  float: right;
+  display: block;
+}
+
+.item { 
+  border: 3px;
+  border-style: solid;
+
+}
