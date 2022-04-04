@@ -2,16 +2,22 @@ import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bycrypt from 'bcrypt';
+import { LoginUsersDTO } from 'src/dto/create-users-dto';
+import { EntityRepository } from '@mikro-orm/core';
+import { UserEntity } from 'src/entities/user.entity';
+import { InjectRepository } from '@mikro-orm/nestjs';
 
 @Injectable()
 export class AuthService {
   constructor(
+    @InjectRepository(UserEntity)
+    private readonly UserRepository: EntityRepository<UserEntity>,
     private usersService: UsersService,
     private jwtService: JwtService,
   ) {}
 
-  async validateUser(login: string, pass: string): Promise<any> {
-    const user = await this.usersService.findOne(login);
+  async validateUser(username: string, pass: string): Promise<any> {
+    const user = await this.UserRepository.findOne({ username });
     if (user && bycrypt.compare(pass, user.password)) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
@@ -20,8 +26,8 @@ export class AuthService {
     return null;
   }
 
-  async login(user: any): Promise<any> {
-    const payload = { username: user.username, sub: user.userId };
+  async login({ username, id }: LoginUsersDTO): Promise<any> {
+    const payload = { username: username, sub: id };
     return {
       access_token: this.jwtService.sign(payload),
     };

@@ -1,35 +1,31 @@
+import { EntityRepository } from '@mikro-orm/core';
+import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import * as bycrypt from 'bcrypt';
-export type User = any;
+import { CreateUsersDTO } from 'src/dto/create-users-dto';
+import { UserEntity } from 'src/entities/user.entity';
 
 @Injectable()
 export class UsersService {
-  private readonly users = [
-    {
-      userId: 1,
-      username: 'john',
-      password: 'changeme',
-    },
-    {
-      userId: 2,
-      username: 'maria',
-      password: 'guess',
-    },
-  ];
+  constructor(
+    @InjectRepository(UserEntity)
+    private readonly UserRepository: EntityRepository<UserEntity>,
+  ) {}
 
-  async findOne(username: string): Promise<User | undefined> {
-    return this.users.find((user) => user.username === username);
-  }
-
-  async create(userData: any): Promise<any> {
+  async create({
+    username,
+    email,
+    password,
+  }: CreateUsersDTO): Promise<boolean> {
     const salt = await bycrypt.genSalt(10);
-    const hashedPassword = await bycrypt.hash(userData.password, salt);
-    const userId = Date.now();
-    this.users.push({
-      userId: userId,
-      username: userData.username,
-      password: hashedPassword,
-    });
-    return true;
+    const hashedPassword = await bycrypt.hash(password, salt);
+    try {
+      await this.UserRepository.persistAndFlush(
+        new UserEntity(username, email, hashedPassword),
+      );
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 }

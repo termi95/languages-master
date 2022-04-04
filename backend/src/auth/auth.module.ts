@@ -7,6 +7,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
 import * as dotenv from 'dotenv';
+import { MikroOrmModule } from '@mikro-orm/nestjs';
+import { UserEntity } from 'src/entities/user.entity';
 
 dotenv.config();
 
@@ -18,6 +20,7 @@ dotenv.config();
       secret: process.env.JWT_SECRET,
       signOptions: { expiresIn: '21600s' },
     }),
+    MikroOrmModule.forFeature({ entities: [UserEntity] }),
   ],
   controllers: [AuthController],
   providers: [AuthService, LocalStrategy, JwtStrategy],
