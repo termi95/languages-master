@@ -1,6 +1,6 @@
 import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import * as bycrypt from 'bcrypt';
 import { CreateUsersDTO } from 'src/dto/create-users-dto';
 import { UserEntity } from 'src/entities/user.entity';
@@ -25,7 +25,7 @@ export class UsersService {
       );
       return true;
     } catch (error) {
-      return false;
+      throw new BadRequestException(error);
     }
   }
 }

@@ -1,44 +1,48 @@
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { api, saveToken } from "../../api/api.config";
+import { UserLogin } from "../../types/user";
+
+const userInitialState: UserLogin = {
+  username: "",
+  password: "",
+};
 
 export const useLogin = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState<UserLogin>(userInitialState);
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
-  let handleSubmit = (e: any) => {
+  const handleSubmit = (e: any) => {
     e.preventDefault();
 
-    loginPost();
-    async function loginPost() {
-      api
-        .post("/auth/login", {
-          username: username,
-          password: password,
-        })
-        .then((res) => {
-          if (res.status === 200) {
-            setUsername("");
-            setPassword("");
-            saveToken(res.data.access_token);
-            navigate("/home");
-          }
-        })
-        .catch((error) => {
-          setMessage("Some error occured");
-          setTimeout(() => setMessage(""), 5000);
-        });
-    }
+    login();
   };
 
-  let handleChange = (e: HTMLInputElement) => {
+  const login = async () => {
+    await api
+      .post("/auth/login", { user })
+      .then((res) => {
+        if (res.status === 200) {
+          setUser(userInitialState);
+          saveToken(res.data.access_token);
+          navigate("/home");
+        }
+      })
+      .catch((error) => {
+        setMessage("Some error occured");
+        setTimeout(() => setMessage(""), 5000);
+      });
+  };
+
+  const handleChange = (e: HTMLInputElement) => {
+    let newUserData = { ...user };
     if (e.name === "username") {
-      setUsername(e.value);
+      newUserData.username = e.value;
     } else if (e.name === "password") {
-      setPassword(e.value);
+      newUserData.password = e.value;
     }
+    setUser(newUserData);
   };
 
   return {

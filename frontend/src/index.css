@@ -18,7 +18,21 @@ code {
 }
 
 .action-color {
-  background-color: rgb(92, 158, 173);
+  background-color: rgb(114, 188, 204);
+}
+  
+.form > input, select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+a {
+  color: black;
 }
 
 /*
@@ -27,6 +41,8 @@ kolory
 92, 158, 173 - jasny na akcje
 bały tło
 50, 98, 115 - ciemny niebiesty do obczajenia
+rgb(114, 188, 204);
+rgb(92, 158, 173);
 
 
 */

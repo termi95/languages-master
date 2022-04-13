@@ -7,8 +7,8 @@ const Login = () => {
   return (
     <div className="grid-container">
       <div className="login-box panel-color">
-        <form onSubmit={handleSubmit}>
-          <label htmlFor="login">Login:</label>
+        <form onSubmit={handleSubmit} className="form">
+          <label htmlFor="username">Username:</label>
           <input
             type="text"
             name="username"
@@ -22,11 +22,11 @@ const Login = () => {
             id="password"
             onChange={(e) => handleChange(e.target)}
           />
-          <input className="action-color" type="submit" value="username" />
+          <input className="action-color" type="submit" value="Login" />
           <div className="message">{message ? <p>{message}</p> : null}</div>
         </form>
         <div>
-          <Link to={"/register"}>register</Link>
+          <p>If u want to crate account you can always <Link to={"/register"}>register</Link>.</p>
         </div>
       </div>
     </div>
