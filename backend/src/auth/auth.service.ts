@@ -18,7 +18,8 @@ export class AuthService {
 
   async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.UserRepository.findOne({ username });
-    if (user && bycrypt.compare(pass, user.password)) {
+    console.log(user, pass);
+    if (user && (await bycrypt.compare(pass, user.password))) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
       return result;
