@@ -10,4 +10,10 @@ type UserLogin = {
   password: string;
 };
 
-export type { UserRegister, UserLogin };
+type userProfile = {
+  id: string;
+  username: string;
+  email: string;
+};
+
+export type { UserRegister, UserLogin, userProfile };

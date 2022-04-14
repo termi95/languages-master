@@ -1,5 +1,12 @@
+import Navbar from "../navbar";
+
 const Home = () => {
-  return <div className="grid-container">home</div>;
+  return (
+    <>
+      <Navbar />
+      home
+    </>
+  );
 };
 
 export default Home;

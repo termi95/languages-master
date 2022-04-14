@@ -21,11 +21,11 @@ export const useLogin = () => {
 
   const login = async () => {
     await api
-      .post("/auth/login", { user })
+      .post("/auth/login", { ...user })
       .then((res) => {
         if (res.status === 200) {
           setUser(userInitialState);
-          saveToken(res.data.access_token);
+          saveToken(res.data.access_token,res.data.userId);
           navigate("/home");
         }
       })

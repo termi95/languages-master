@@ -12,3 +12,9 @@ export interface LoginUsersDTO {
 export interface LoginUserDtoReq {
   user: LoginUsersDTO;
 }
+
+export interface ProfileUserDTO {
+  id: number;
+  username: string;
+  email: string;
+}

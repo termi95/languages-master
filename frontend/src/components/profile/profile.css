@@ -1,0 +1,22 @@
+.grid-profile {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  height: 100vh;
+}
+
+.profile {
+  grid-column-start: 2;
+  grid-row: 1;
+  padding-top: 50px;
+}
+
+.profile p {
+  font-size: 1.6rem;
+}
+
+.profile-card td, th {
+  text-align: left;
+  padding-top: 12px;
+  padding-bottom: 12px;
+}

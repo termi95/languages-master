@@ -29,7 +29,7 @@ export const useRegister = () => {
       .post("/auth/register", { ...user })
       .then((res) => {
         if (res.status === 201) {
-          setMessage("Udało się założyć konto.");
+          setMessage("Account creat successfully.");
         }
       })
       .catch((error) => {
@@ -42,7 +42,10 @@ export const useRegister = () => {
     const { password, rePassword } = user;
     if (password !== rePassword) {
       formValid = false;
-      setMessage("Hasła nie są takie same.");
+      setMessage("Passwords not match.");
+      setTimeout(() => setMessage(""), 5000);
+    } else if (password.length >= 8) {
+      setMessage("Minimum passwords lenghtis 8.");
       setTimeout(() => setMessage(""), 5000);
     } else if (password === rePassword) {
       formValid = true;
