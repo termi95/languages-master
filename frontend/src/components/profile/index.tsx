@@ -3,8 +3,9 @@ import Navbar from "../navbar";
 import { useProfile } from "./useProfile";
 
 const Profile = () => {
-    const { user } = useProfile();
-    const {id, username, email} = user;
+  const { user } = useProfile();
+  const { id, username, email } = user;
+
   return (
     <>
       <div className="grid-profile">

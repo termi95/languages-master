@@ -10,18 +10,20 @@ const userInitialState: userProfile = {
 
 export const useProfile = () => {
   const [user, setUser] = useState<userProfile>(userInitialState);
-  useEffect(() => {
-    api
+
+  const getProfile = async () => {
+    await api
       .get("auth/profile")
       .then((res) => {
         if (res.status === 200) {
-          console.log(res.data);
+          setUser(res.data);
         }
       })
-      .catch((error) => {
-        console.log(error);
-      });
-  });
+      .catch((error) => {});
+  };
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   return {
     user,
