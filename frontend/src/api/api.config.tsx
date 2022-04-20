@@ -17,4 +17,27 @@ const removeToken = () => {
   localStorage.removeItem("userId");
 };
 
+api.interceptors.request.use((req) => {
+  if (!localStorage.getItem("accessToken") && req.headers !== undefined) {
+    req.headers.Authorization = `Bearer ${localStorage.getItem("accessToken")}`;
+  }
+  return req
+});
+
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    if (error.response.status === 401) {
+      removeToken();
+
+      window.location.href = "/login";
+
+      console.log("jest tutaj");
+    }
+    return error;
+  }
+);
+
 export { api, saveToken, removeToken };
