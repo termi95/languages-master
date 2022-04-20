@@ -8,7 +8,7 @@ import { AuthController } from './auth.controller';
 import { JwtStrategy } from './jwt.strategy';
 import * as dotenv from 'dotenv';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import { UserEntity } from 'src/entities/user.entity';
+import { UserEntity } from 'src/entities/user/user.entity';
 
 dotenv.config();
 

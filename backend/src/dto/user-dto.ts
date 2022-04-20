@@ -1,16 +1,16 @@
-export interface CreateUsersDTO {
+export interface UserDTO {
   username: string;
   email: string;
   password: string;
 }
 
-export interface LoginUsersDTO {
+export interface LoginUserDTO {
   username: string;
-  id: string;
+  id: number;
 }
 
 export interface LoginUserDtoReq {
-  user: LoginUsersDTO;
+  user: LoginUserDTO;
 }
 
 export interface ProfileUserDTO {

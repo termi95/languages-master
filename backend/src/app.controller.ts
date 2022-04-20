@@ -11,7 +11,7 @@ import { LocalAuthGuard } from './auth/local-auth.guard';
 import { AuthService } from './auth/auth.service';
 import { UsersService } from './users/users.service';
 import { JwtAuthGuard } from './auth/jwt-auth.guard';
-import { CreateUsersDTO, LoginUserDtoReq } from './dto/create-users-dto';
+import { UserDTO, LoginUserDtoReq } from './dto/user-dto';
 
 @Controller('auth')
 export class AppController {
@@ -28,7 +28,7 @@ export class AppController {
   }
 
   @Post('/register')
-  async register(@Body() dto: CreateUsersDTO) {
+  async register(@Body() dto: UserDTO) {
     return this.authService.register(dto);
   }
 

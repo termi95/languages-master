@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { UsersService } from 'src/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bycrypt from 'bcrypt';
-import { LoginUsersDTO } from 'src/dto/create-users-dto';
+import { LoginUserDTO } from 'src/dto/user-dto';
 import { EntityRepository } from '@mikro-orm/core';
-import { UserEntity } from 'src/entities/user.entity';
+import { UserEntity } from 'src/entities/user/user.entity';
 import { InjectRepository } from '@mikro-orm/nestjs';
 
 @Injectable()
@@ -27,7 +27,7 @@ export class AuthService {
     return null;
   }
 
-  async login({ username, id }: LoginUsersDTO): Promise<any> {
+  async login({ username, id }: LoginUserDTO): Promise<any> {
     const payload = { username: username, sub: id };
     return {
       access_token: this.jwtService.sign(payload),

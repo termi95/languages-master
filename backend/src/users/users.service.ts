@@ -2,8 +2,8 @@ import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import * as bycrypt from 'bcrypt';
-import { CreateUsersDTO, ProfileUserDTO } from 'src/dto/create-users-dto';
-import { UserEntity } from 'src/entities/user.entity';
+import { UserDTO, ProfileUserDTO } from 'src/dto/user-dto';
+import { UserEntity } from 'src/entities/user/user.entity';
 
 @Injectable()
 export class UsersService {
@@ -12,11 +12,7 @@ export class UsersService {
     private readonly UserRepository: EntityRepository<UserEntity>,
   ) {}
 
-  async create({
-    username,
-    email,
-    password,
-  }: CreateUsersDTO): Promise<boolean> {
+  async create({ username, email, password }: UserDTO): Promise<boolean> {
     const salt = await bycrypt.genSalt(10);
     const hashedPassword = await bycrypt.hash(password, salt);
     try {

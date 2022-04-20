@@ -9,11 +9,13 @@ import {
 } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AuthModule } from './auth/auth.module';
+import { MagicWordController } from './magicWord/magic-word/magic-word.controller';
+import { MagicWordModule } from './magicWord/magic-word/magic-word.module';
 import { UsersModule } from './users/users.module';
 
 @Module({
-  imports: [MikroOrmModule.forRoot(), AuthModule, UsersModule],
-  controllers: [AppController],
+  imports: [MikroOrmModule.forRoot(), AuthModule, UsersModule, MagicWordModule],
+  controllers: [AppController, MagicWordController],
   providers: [],
 })
 export class AppModule implements NestModule, OnModuleInit {
