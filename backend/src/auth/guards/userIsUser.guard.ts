@@ -23,10 +23,7 @@ export class UserIsUserGuard implements CanActivate {
       const bodyUserId: number = request.body['userId'];
       const jwtToken: string = headers.authorization.split(' ')[1];
       const userIdFromToken: number = this.authService.getIdFromToken(jwtToken);
-      if (bodyUserId === userIdFromToken) {
-        return true;
-      }
-      return false;
+      return bodyUserId === userIdFromToken ? true : false;
     } catch (error) {
       return false;
     }

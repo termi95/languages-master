@@ -17,12 +17,6 @@ export class MagicWordController {
   constructor(private magicWordService: MagicWordService) {}
 
   @UseGuards(JwtAuthGuard)
-  @Post('/word/add')
-  async add(@Request() req: Request) {
-    return true;
-  }
-
-  @UseGuards(JwtAuthGuard)
   @UseGuards(UserIsUserGuard)
   @Post('/header/create')
   async createHeader(@Body() body: MagicWordHeaderDTO) {
@@ -41,13 +35,18 @@ export class MagicWordController {
     return await this.magicWordService.modifyHeader(body);
   }
   @UseGuards(JwtAuthGuard)
-  @Post('/word/delete')
-  async delete(@Request() req: Request) {
+  @Post('/word/add')
+  async add(@Request() req: Request) {
     return true;
   }
   @UseGuards(JwtAuthGuard)
   @Post('/word/modify')
   async modify(@Request() req: Request) {
+    return true;
+  }
+  @UseGuards(JwtAuthGuard)
+  @Post('/word/delete')
+  async delete(@Request() req: Request) {
     return true;
   }
 }

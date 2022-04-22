@@ -18,10 +18,14 @@ const removeToken = () => {
 };
 
 api.interceptors.request.use((req) => {
-  if (!localStorage.getItem("accessToken") && req.headers !== undefined) {
+  if (
+    localStorage.getItem("accessToken") !== null &&
+    req.headers !== undefined &&
+    req.headers.Authorization === "Bearer null"
+  ) {
     req.headers.Authorization = `Bearer ${localStorage.getItem("accessToken")}`;
   }
-  return req
+  return req;
 });
 
 api.interceptors.response.use(
@@ -31,10 +35,7 @@ api.interceptors.response.use(
   (error) => {
     if (error.response.status === 401) {
       removeToken();
-
       window.location.href = "/login";
-
-      console.log("jest tutaj");
     }
     return error;
   }
