@@ -18,7 +18,6 @@ export class AuthService {
 
   async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.UserRepository.findOne({ username });
-    console.log(user, pass);
     if (user && (await bycrypt.compare(pass, user.password))) {
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const { password, ...result } = user;
@@ -37,5 +36,10 @@ export class AuthService {
 
   async register(userData: any): Promise<any> {
     return await this.usersService.create(userData);
+  }
+
+  getIdFromToken(jwtToken: string): number {
+    const decodeToken = this.jwtService.decode(jwtToken);
+    return decodeToken['sub'];
   }
 }
