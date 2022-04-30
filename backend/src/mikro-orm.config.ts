@@ -12,6 +12,7 @@ const config: Options = {
   type: 'postgresql',
   logger: logger.log.bind(logger),
   debug: true,
+  //dropTables: true,
 };
 
 export default config;

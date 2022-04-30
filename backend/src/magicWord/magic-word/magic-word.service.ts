@@ -1,7 +1,9 @@
 import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
+import { IMagicWordHeader } from 'src/app-types/MagicWordHeader';
 import { MagicWordHeaderDTO } from 'src/dto/magic-word-dto';
+import { ProfileUserDTO } from 'src/dto/user-dto';
 import { MagicWordEntity } from 'src/entities/magicWord/magicWord.entity';
 import { MagicWordHeaderEntity } from 'src/entities/magicWord/magicWordHeader.entity';
 
@@ -13,16 +15,23 @@ export class MagicWordService {
     @InjectRepository(MagicWordEntity)
     private readonly MagicWordEntityRepository: EntityRepository<MagicWordEntity>,
   ) {}
-  async createHeader(magicWordHeader: MagicWordHeaderDTO): Promise<boolean> {
+  async createHeader(
+    magicWordHeader: MagicWordHeaderDTO,
+  ): Promise<string | IMagicWordHeader> {
     try {
-      const magicWordHeaderEntity =
-        this.MagicWordHeaderRepository.create(magicWordHeader);
-      await this.MagicWordHeaderRepository.persistAndFlush(
-        magicWordHeaderEntity,
-      );
-      return true;
+      if (magicWordHeader.name != '') {
+        const magicWordHeaderEntity =
+          this.MagicWordHeaderRepository.create(magicWordHeader);
+        await this.MagicWordHeaderRepository.persistAndFlush(
+          magicWordHeaderEntity,
+        );
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { words, createDate, ...result } = magicWordHeaderEntity;
+        return result;
+      }
+      return 'Name cannot be empty';
     } catch (error) {
-      return false;
+      return error;
     }
   }
   async deleteHeader(magicWordHeader: MagicWordHeaderDTO): Promise<boolean> {
@@ -49,5 +58,14 @@ export class MagicWordService {
     } catch (error) {
       return false;
     }
+  }
+  async getUserHeaders(id: number) {
+    const userHeaders = await this.MagicWordHeaderRepository.find(
+      {
+        userId: id,
+      },
+      { fields: ['id', 'name', 'userId'] },
+    );
+    return userHeaders;
   }
 }

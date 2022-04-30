@@ -6,7 +6,7 @@ const Navbar = () => {
     <nav className="sidenav">
       <Link to={"/home"}>Home</Link>
       <Link to={"/profile"}>Profile</Link>
-      <Link to={"/words"}>Magic words</Link>
+      <Link to={"/magic-word"}>Magic words</Link>
     </nav>
   );
 };
