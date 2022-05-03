@@ -2,15 +2,15 @@ import { useEffect, useState } from "react";
 import { api } from "../../api/api.config";
 import { IMagicWordHeader } from "../../app-types/MagicWordHeader";
 
-const initialWordsCollection: IMagicWordHeader[] = [];
 export const useMagicWord = () => {
-  const [wordsCollection, setWordsCollection] = useState(
-    initialWordsCollection
+  const [wordsCollection, setWordsCollection] = useState<IMagicWordHeader[]>(
+    []
   );
   const [name, setName] = useState("");
 
   useEffect(() => {
     getUserWordsCollection();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const clickHandler = () => {
@@ -37,17 +37,33 @@ export const useMagicWord = () => {
       .post("/magic-word/header/create", { name, userId })
       .then((res) => {
         if (res.status === 201) {
-          setName("");
+          setName(() => "");
           setWordsCollection([...wordsCollection, res.data]);
         }
       })
       .catch((error) => {});
   };
 
+  const removeHeaderFromList = (header: IMagicWordHeader) => {
+    let collection = [...wordsCollection];
+    collection = collection.filter((elem) => elem.id !== header.id);
+    // collection.splice(collection.findIndex(item => item.id === header.id), 1)
+    //console.log(wordsCollection.filter((elem) => elem.id !== header.id));
+    setWordsCollection([...collection]);
+  };
+
+  const handleKeyDown = (keyPressed: string) => {
+    if (keyPressed === "Enter" && name !== "") {
+      createHeader();
+    }
+  };
+
   return {
     clickHandler,
     handleChange,
+    handleKeyDown,
     wordsCollection,
+    removeHeaderFromList,
     name,
   };
 };

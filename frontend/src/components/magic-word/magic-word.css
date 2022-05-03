@@ -87,3 +87,12 @@
   max-height: 100%;
   border-bottom: 1px solid rgb(124, 124, 124);
 }
+
+#trash-bin {
+  max-height: 25px;
+  max-width: 25px;
+}
+
+#trash-bin:hover {
+  cursor: pointer;
+}

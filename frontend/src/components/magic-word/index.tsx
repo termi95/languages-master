@@ -5,7 +5,8 @@ import { MagicWordCollection } from "./magic-word-collection";
 import { useMagicWord } from "./useMagic-Word";
 
 const MagicWordHeader = () => {
-  const { clickHandler, handleChange, wordsCollection } = useMagicWord();
+  const { clickHandler, handleChange, handleKeyDown, wordsCollection, name } =
+    useMagicWord();
   return (
     <>
       <div className="grid-MagicWordHeader">
@@ -22,13 +23,16 @@ const MagicWordHeader = () => {
                 type="text"
                 placeholder="Name"
                 onChange={(e) => handleChange(e.target)}
+                value={name}
+                onKeyDown={(e) => handleKeyDown(e.key)}
               />
               <button onClick={clickHandler}>
                 <img src={plus} alt="plus" />
               </button>
             </div>
           </div>
-          <MagicWordCollection item={wordsCollection} />
+          <MagicWordCollection headers={wordsCollection} />
+          {JSON.stringify([...wordsCollection])}
         </section>
       </div>
     </>
