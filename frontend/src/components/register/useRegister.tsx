@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { api } from "../../api/api.config";
 import { UserRegister } from "../../types/user";
 
@@ -14,6 +15,8 @@ const userRegisterInitialState: UserRegister = {
 export const useRegister = () => {
   const [user, setUser] = useState<UserRegister>(userRegisterInitialState);
   const [message, setMessage] = useState("");
+  const navigate = useNavigate();
+
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
@@ -30,6 +33,7 @@ export const useRegister = () => {
       .then((res) => {
         if (res.status === 201) {
           setMessage("Account creat successfully.");
+          navigate("/login");
         }
       })
       .catch((error) => {

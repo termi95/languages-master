@@ -19,13 +19,7 @@ export const useMagicWordCollection = () => {
     }
   };
 
-  const deleteHandler = async (e: any) => {
-    const header: IMagicWordHeader = {
-      id: Number(e.currentTarget.parentNode.parentNode.firstChild.id),
-      name: e.currentTarget.parentNode.parentNode.firstChild.textContent,
-      userId: Number(localStorage.getItem("userId")),
-    };
-
+  const deleteHandler = async (header: IMagicWordHeader) => {
     await api
       .delete("/magic-word/header/delete", { data: { ...header } })
       .then((res) => {
@@ -34,7 +28,6 @@ export const useMagicWordCollection = () => {
         }
       })
       .catch((error) => {});
-
   };
 
   return {

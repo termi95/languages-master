@@ -7,6 +7,7 @@ import { useMagicWord } from "./useMagic-Word";
 const MagicWordHeader = () => {
   const { clickHandler, handleChange, handleKeyDown, wordsCollection, name } =
     useMagicWord();
+    
   return (
     <>
       <div className="grid-MagicWordHeader">
@@ -32,7 +33,7 @@ const MagicWordHeader = () => {
             </div>
           </div>
           <MagicWordCollection headers={wordsCollection} />
-          {JSON.stringify([...wordsCollection])}
+          {JSON.stringify(wordsCollection)}
         </section>
       </div>
     </>

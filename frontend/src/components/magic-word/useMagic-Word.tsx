@@ -45,11 +45,12 @@ export const useMagicWord = () => {
   };
 
   const removeHeaderFromList = (header: IMagicWordHeader) => {
-    let collection = [...wordsCollection];
-    collection = collection.filter((elem) => elem.id !== header.id);
+    //let collection = [...wordsCollection];
+    //collection = collection.filter((elem) => elem.id !== header.id);
     // collection.splice(collection.findIndex(item => item.id === header.id), 1)
     //console.log(wordsCollection.filter((elem) => elem.id !== header.id));
-    setWordsCollection([...collection]);
+    //setWordsCollection((collection) => collection.filter((elem) => elem.id !== header.id))
+    setWordsCollection((prevState) => prevState.filter((elem) => elem.id !== header.id));
   };
 
   const handleKeyDown = (keyPressed: string) => {
