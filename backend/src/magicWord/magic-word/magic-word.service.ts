@@ -36,11 +36,8 @@ export class MagicWordService {
   }
   async deleteHeader(magicWordHeader: MagicWordHeaderDTO): Promise<boolean> {
     try {
-      console.log(magicWordHeader);
       const magicWordHeaderEntity =
         await this.MagicWordHeaderRepository.findOne(magicWordHeader);
-      console.log(magicWordHeaderEntity);
-
       await this.MagicWordHeaderRepository.removeAndFlush(
         magicWordHeaderEntity,
       );

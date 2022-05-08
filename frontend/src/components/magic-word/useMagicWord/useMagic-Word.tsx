@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { api } from "../../api/api.config";
-import { IMagicWordHeader } from "../../app-types/MagicWordHeader";
+import { api } from "../../../api/api.config";
+import { IMagicWordHeader } from "../../../app-types/MagicWordHeader";
 
 export const useMagicWord = () => {
   const [wordsCollection, setWordsCollection] = useState<IMagicWordHeader[]>(
@@ -45,12 +45,18 @@ export const useMagicWord = () => {
   };
 
   const removeHeaderFromList = (header: IMagicWordHeader) => {
-    //let collection = [...wordsCollection];
-    //collection = collection.filter((elem) => elem.id !== header.id);
-    // collection.splice(collection.findIndex(item => item.id === header.id), 1)
-    //console.log(wordsCollection.filter((elem) => elem.id !== header.id));
-    //setWordsCollection((collection) => collection.filter((elem) => elem.id !== header.id))
     setWordsCollection((prevState) => prevState.filter((elem) => elem.id !== header.id));
+  };
+
+  const deleteHandler = async (header: IMagicWordHeader) => {
+    await api
+      .delete("/magic-word/header/delete", { data: { ...header } })
+      .then((res) => {
+        if (res.status === 200) {
+          removeHeaderFromList(header);
+        }
+      })
+      .catch((error) => {});
   };
 
   const handleKeyDown = (keyPressed: string) => {
@@ -63,8 +69,9 @@ export const useMagicWord = () => {
     clickHandler,
     handleChange,
     handleKeyDown,
-    wordsCollection,
     removeHeaderFromList,
+    deleteHandler,
+    wordsCollection,
     name,
   };
 };

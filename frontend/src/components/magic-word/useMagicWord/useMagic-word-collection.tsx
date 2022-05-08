@@ -1,8 +1,8 @@
-import { api } from "../../api/api.config";
-import { IMagicWordHeader } from "../../app-types/MagicWordHeader";
+import { api } from "../../../api/api.config";
+import { IMagicWordHeader } from "../../../app-types/MagicWordHeader";
 import { useMagicWord } from "./useMagic-Word";
 
-export const useMagicWordCollection = () => {
+export const useMagicWordActionBar= () => {
   const { removeHeaderFromList } = useMagicWord();
   const clickHandlerSlideDown = async (e: any) => {
     const listOfAllPanels = e.currentTarget.parentNode.parentNode.childNodes;
@@ -19,19 +19,7 @@ export const useMagicWordCollection = () => {
     }
   };
 
-  const deleteHandler = async (header: IMagicWordHeader) => {
-    await api
-      .delete("/magic-word/header/delete", { data: { ...header } })
-      .then((res) => {
-        if (res.status === 200) {
-          removeHeaderFromList(header);
-        }
-      })
-      .catch((error) => {});
-  };
-
   return {
     clickHandlerSlideDown,
-    deleteHandler,
   };
 };
