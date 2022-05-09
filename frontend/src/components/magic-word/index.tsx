@@ -1,6 +1,6 @@
 import "./magic-word.css";
 import Navbar from "../navbar";
-import plus from "../../assets/plus-icon.png";
+import plus from "../../assets/plus.svg";
 import { MagicWordCollection } from "./magic-word-collection";
 import { useHeader } from "./MagicWordProvider";
 
@@ -27,7 +27,7 @@ const MagicWordHeader = () => {
               onKeyDown={(e) => handleKeyDown(e.key)}
             />
             <button onClick={clickHandler}>
-              <img src={plus} alt="plus" />
+              <img className="action-icon" src={plus} alt="Add new header" />
             </button>
           </div>
         </div>

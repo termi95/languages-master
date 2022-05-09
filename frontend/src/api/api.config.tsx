@@ -22,7 +22,7 @@ api.interceptors.request.use((req) => {
     localStorage.getItem("accessToken") !== null &&
     req.headers !== undefined &&
     (req.headers.Authorization === "Bearer null" ||
-      req.headers.Authorization ===
+      req.headers.Authorization !==
         `Bearer ${localStorage.getItem("accessToken")}`)
   ) {
     req.headers.Authorization = `Bearer ${localStorage.getItem("accessToken")}`;

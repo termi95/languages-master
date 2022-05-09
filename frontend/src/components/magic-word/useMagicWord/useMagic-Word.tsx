@@ -45,7 +45,9 @@ export const useMagicWord = () => {
   };
 
   const removeHeaderFromList = (header: IMagicWordHeader) => {
-    setWordsCollection((prevState) => prevState.filter((elem) => elem.id !== header.id));
+    setWordsCollection((prevState) =>
+      prevState.filter((elem) => elem.id !== header.id)
+    );
   };
 
   const deleteHandler = async (header: IMagicWordHeader) => {
@@ -65,12 +67,48 @@ export const useMagicWord = () => {
     }
   };
 
+  const editHeader = async (
+    newHeaderName: string,
+    header: IMagicWordHeader
+  ) => {
+    header.name = newHeaderName;
+    await api
+      .patch("/magic-word/header/edit", { ...header })
+      .then((res) => {
+        if (res.status === 200) {
+          editElementInWordsCollection(header);
+        }
+      })
+      .catch((error) => {});
+  };
+
+  const editElementInWordsCollection = (header: IMagicWordHeader) => {
+    let wordsCollectionAfterCahnge = wordsCollection;
+    const headerIndex = wordsCollection.findIndex(
+      (obj) => obj.id === header.id
+    );
+    wordsCollectionAfterCahnge[headerIndex].name = header.name;
+    setWordsCollection([...wordsCollectionAfterCahnge]);
+  };
+
+  const handleKeyDownEditName = (
+    keyPressed: string,
+    newName: string,
+    header: IMagicWordHeader
+  ) => {
+    if (keyPressed === "Enter" && newName !== "") {
+      editHeader(newName, header);
+    }
+  };
+
   return {
     clickHandler,
     handleChange,
     handleKeyDown,
     removeHeaderFromList,
     deleteHandler,
+    handleKeyDownEditName,
+    editHeader,
     wordsCollection,
     name,
   };

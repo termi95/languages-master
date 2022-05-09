@@ -3,7 +3,6 @@ import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import { IMagicWordHeader } from 'src/app-types/MagicWordHeader';
 import { MagicWordHeaderDTO } from 'src/dto/magic-word-dto';
-import { ProfileUserDTO } from 'src/dto/user-dto';
 import { MagicWordEntity } from 'src/entities/magicWord/magicWord.entity';
 import { MagicWordHeaderEntity } from 'src/entities/magicWord/magicWordHeader.entity';
 
@@ -56,7 +55,7 @@ export class MagicWordService {
       );
       return true;
     } catch (error) {
-      return false;
+      return error;
     }
   }
   async getUserHeaders(id: number) {

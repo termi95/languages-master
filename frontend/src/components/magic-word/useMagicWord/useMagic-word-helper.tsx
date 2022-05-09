@@ -1,9 +1,9 @@
-import { api } from "../../../api/api.config";
-import { IMagicWordHeader } from "../../../app-types/MagicWordHeader";
-import { useMagicWord } from "./useMagic-Word";
+import { useRef, useState } from "react";
 
-export const useMagicWordActionBar= () => {
-  const { removeHeaderFromList } = useMagicWord();
+export const useMagicWordActionBar = () => {
+  const [editVisibility, setEditVisibility] = useState(false);
+  const [editedName, setEditedName] = useState("");
+
   const clickHandlerSlideDown = async (e: any) => {
     const listOfAllPanels = e.currentTarget.parentNode.parentNode.childNodes;
     const actionPanel = e.currentTarget.parentNode.childNodes[1];
@@ -19,7 +19,24 @@ export const useMagicWordActionBar= () => {
     }
   };
 
+  const toglleVisibility = () => {
+    setEditVisibility((pev) => !pev);
+  };
+
+  const handleClickOutside = (visibility :boolean) => {
+    setEditVisibility(visibility);
+  };
+
+  const handleChange = (e: HTMLInputElement) => {
+    setEditedName(e.value);
+  };
+
   return {
     clickHandlerSlideDown,
+    toglleVisibility,
+    handleClickOutside,
+    handleChange,
+    editVisibility,
+    editedName,
   };
 };

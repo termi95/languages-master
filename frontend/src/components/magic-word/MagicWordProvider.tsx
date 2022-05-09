@@ -18,6 +18,8 @@ const useMagicWordSetting = () => {
     handleChange,
     deleteHandler,
     removeHeaderFromList,
+    handleKeyDownEditName,
+    editHeader,
     name,
     wordsCollection,
   } = useMagicWord();
@@ -28,6 +30,8 @@ const useMagicWordSetting = () => {
     handleChange,
     deleteHandler,
     removeHeaderFromList,
+    handleKeyDownEditName,
+    editHeader,
     name,
     wordsCollection,
   };

@@ -26,6 +26,17 @@
   padding-top: 10px;
 }
 
+#add-new-collection .action-icon {
+  width: 15%;
+}
+
+#edit-collection input{
+  width:60%;
+}
+#edit-collection button {
+  width: 25%;
+} 
+
 #collection-name-input input {
   width: 70%;
   padding-top: 10px;
@@ -79,6 +90,8 @@
   max-height: 0;
   overflow: hidden;
   transition: 50ms;
+  display: flex;  
+  justify-content: space-around;
 }
 
 .open {
@@ -88,11 +101,12 @@
   border-bottom: 1px solid rgb(124, 124, 124);
 }
 
-#trash-bin {
+.action-icon  {
   max-height: 25px;
   max-width: 25px;
 }
 
-#trash-bin:hover {
+
+.action-icon:hover {
   cursor: pointer;
 }

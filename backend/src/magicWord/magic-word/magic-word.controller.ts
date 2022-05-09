@@ -12,7 +12,6 @@ import { MagicWordService } from './magic-word.service';
 import { MagicWordHeaderDTO } from '../../dto/magic-word-dto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UserIsUserGuard } from 'src/auth/guards/userIsUser.guard';
-import { LoginUserDtoReq } from 'src/dto/user-dto';
 
 @Controller('magic-word')
 export class MagicWordController {
@@ -37,7 +36,7 @@ export class MagicWordController {
   }
   @UseGuards(JwtAuthGuard)
   @UseGuards(UserIsUserGuard)
-  @Patch('/header/modify')
+  @Patch('/header/edit')
   async modifyHeader(@Body() body: MagicWordHeaderDTO) {
     return await this.magicWordService.modifyHeader(body);
   }
