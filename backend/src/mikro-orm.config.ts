@@ -6,13 +6,13 @@ const config: Options = {
   entities: ['./dist/entities'],
   entitiesTs: ['./src/entities'],
   dbName: process.env.DB_NAME,
-  user: process.env.USER,
-  password: process.env.PASSWORD,
-  port: 5432,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST_DEV,
+  port: Number.parseInt(process.env.DB_PORT_DEV),
   type: 'postgresql',
   logger: logger.log.bind(logger),
   debug: true,
-  //dropTables: true,
 };
 
 export default config;
