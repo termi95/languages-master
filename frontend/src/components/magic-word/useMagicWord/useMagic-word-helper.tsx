@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export const useMagicWordActionBar = () => {
   const [editVisibility, setEditVisibility] = useState(false);
@@ -23,7 +23,7 @@ export const useMagicWordActionBar = () => {
     setEditVisibility((pev) => !pev);
   };
 
-  const handleClickOutside = (visibility :boolean) => {
+  const handleClickOutside = (visibility: boolean) => {
     setEditVisibility(visibility);
   };
 
@@ -31,11 +31,16 @@ export const useMagicWordActionBar = () => {
     setEditedName(e.value);
   };
 
+  const resetName = () => {
+    setEditedName("");
+  };
+
   return {
     clickHandlerSlideDown,
     toglleVisibility,
     handleClickOutside,
     handleChange,
+    resetName,
     editVisibility,
     editedName,
   };

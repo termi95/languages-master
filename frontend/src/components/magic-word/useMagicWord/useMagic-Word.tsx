@@ -72,14 +72,18 @@ export const useMagicWord = () => {
     header: IMagicWordHeader
   ) => {
     header.name = newHeaderName;
+    let success = false;
     await api
       .patch("/magic-word/header/edit", { ...header })
       .then((res) => {
         if (res.status === 200) {
           editElementInWordsCollection(header);
+          success = true;
         }
       })
       .catch((error) => {});
+
+    return success;
   };
 
   const editElementInWordsCollection = (header: IMagicWordHeader) => {

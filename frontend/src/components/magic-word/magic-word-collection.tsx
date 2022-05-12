@@ -17,10 +17,11 @@ export const MagicWordCollection = ({ headers }: Props) => {
     toglleVisibility,
     handleChange,
     handleClickOutside,
+    resetName,
     editVisibility,
     editedName,
   } = useMagicWordActionBar();
-  const { deleteHandler, handleKeyDownEditName, editHeader} = useHeader();
+  const { deleteHandler, handleKeyDownEditName, editHeader } = useHeader();
   const ref = useRef<any>();
 
   useEffect(() => {
@@ -34,6 +35,10 @@ export const MagicWordCollection = ({ headers }: Props) => {
       document.removeEventListener("mousedown", checkIfClickedOutside);
     };
   }, [editVisibility, handleClickOutside]);
+
+  const handleEdit = async (editedName: string, header: IMagicWordHeader) => {
+    (await editHeader(editedName, header)) && resetName();
+  };
 
   return (
     <div ref={ref}>
@@ -50,9 +55,11 @@ export const MagicWordCollection = ({ headers }: Props) => {
                   placeholder="Name"
                   onChange={(e) => handleChange(e.target)}
                   value={editedName}
-                  onKeyDown={(e) => handleKeyDownEditName(e.key, editedName, header)}
+                  onKeyDown={(e) =>
+                    handleKeyDownEditName(e.key, editedName, header)
+                  }
                 />
-                <button onClick={()=>editHeader(editedName, header)}>
+                <button onClick={() => handleEdit(editedName, header)}>
                   <img className="action-icon" src={plus} alt="Edit header" />
                 </button>
               </div>
