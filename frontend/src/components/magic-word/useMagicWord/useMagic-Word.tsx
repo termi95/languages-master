@@ -99,10 +99,12 @@ export const useMagicWord = () => {
     keyPressed: string,
     newName: string,
     header: IMagicWordHeader
-  ) => {
+  ): boolean => {
     if (keyPressed === "Enter" && newName !== "") {
       editHeader(newName, header);
+      return true;
     }
+    return false;
   };
 
   return {

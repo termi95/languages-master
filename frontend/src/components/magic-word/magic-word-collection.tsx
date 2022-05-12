@@ -40,6 +40,10 @@ export const MagicWordCollection = ({ headers }: Props) => {
     (await editHeader(editedName, header)) && resetName();
   };
 
+  const handleEditOnKeyDownEdit = async (key: any, editedName: string, header: IMagicWordHeader) => {
+    ( handleKeyDownEditName(key, editedName, header)) && resetName();
+  };
+
   return (
     <div ref={ref}>
       {headers.map((header: IMagicWordHeader) => (
@@ -56,7 +60,7 @@ export const MagicWordCollection = ({ headers }: Props) => {
                   onChange={(e) => handleChange(e.target)}
                   value={editedName}
                   onKeyDown={(e) =>
-                    handleKeyDownEditName(e.key, editedName, header)
+                    handleEditOnKeyDownEdit(e.key, editedName, header)
                   }
                 />
                 <button onClick={() => handleEdit(editedName, header)}>
