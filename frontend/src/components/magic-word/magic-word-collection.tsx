@@ -5,7 +5,7 @@ import editSquer from "../../assets/edit-squer.svg";
 import { IMagicWordHeader } from "../../app-types/MagicWordHeader";
 import { useMagicWordActionBar } from "./useMagicWord/useMagic-word-helper";
 import { useHeader } from "./MagicWordProvider";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type Props = {
   headers: IMagicWordHeader[];
@@ -23,10 +23,17 @@ export const MagicWordCollection = ({ headers }: Props) => {
   } = useMagicWordActionBar();
   const { deleteHandler, handleKeyDownEditName, editHeader } = useHeader();
   const ref = useRef<any>();
+  ref.current = [];
+
+  const addToRefs = (el: any) => {
+    if (el && !ref.current.includes(el) && el !== null) {
+      ref.current.push(el);
+    }
+  };
 
   useEffect(() => {
     const checkIfClickedOutside = (e: any) => {
-      if (editVisibility && ref.current && !ref.current.contains(e.target)) {
+      if (editVisibility && ref.current && !ref.current.includes(e.target)) {
         handleClickOutside(false);
       }
     };
@@ -37,24 +44,33 @@ export const MagicWordCollection = ({ headers }: Props) => {
   }, [editVisibility, handleClickOutside]);
 
   const handleEdit = async (editedName: string, header: IMagicWordHeader) => {
-    (await editHeader(editedName, header)) && resetName();
+    if (editedName !== "") {
+      (await editHeader(editedName, header)) && resetName();
+    }
   };
 
-  const handleEditOnKeyDownEdit = async (key: any, editedName: string, header: IMagicWordHeader) => {
-    ( handleKeyDownEditName(key, editedName, header)) && resetName();
+  const handleEditOnKeyDownEdit = async (
+    key: any,
+    editedName: string,
+    header: IMagicWordHeader
+  ) => {
+    if (editedName !== "") {
+      handleKeyDownEditName(key, editedName, header) && resetName();
+    }
   };
 
   return (
-    <div ref={ref}>
+    <div>
       {headers.map((header: IMagicWordHeader) => (
         <div className="collection-container" key={header.id}>
           <div onClick={clickHandlerSlideDown} className="collection-name">
             <p>{header.name}</p>
           </div>
           {editVisibility ? (
-            <div className="action-panel" id="edit-collection">
-              <div id="edit-collection-input">
+            <div ref={addToRefs} className="action-panel" id="edit-collection">
+              <div ref={addToRefs} id="edit-collection-input">
                 <input
+                  ref={addToRefs}
                   type="text"
                   placeholder="Name"
                   onChange={(e) => handleChange(e.target)}
@@ -63,8 +79,16 @@ export const MagicWordCollection = ({ headers }: Props) => {
                     handleEditOnKeyDownEdit(e.key, editedName, header)
                   }
                 />
-                <button onClick={() => handleEdit(editedName, header)}>
-                  <img className="action-icon" src={plus} alt="Edit header" />
+                <button
+                  ref={addToRefs}
+                  onClick={() => handleEdit(editedName, header)}
+                >
+                  <img
+                    ref={addToRefs}
+                    className="action-icon"
+                    src={plus}
+                    alt="Edit header"
+                  />
                 </button>
               </div>
             </div>

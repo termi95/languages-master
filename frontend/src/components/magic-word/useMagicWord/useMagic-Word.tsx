@@ -67,21 +67,23 @@ export const useMagicWord = () => {
     }
   };
 
-  const editHeader = async (
+  const editHeader = (
     newHeaderName: string,
     header: IMagicWordHeader
-  ) => {
+  ): boolean => {
     header.name = newHeaderName;
     let success = false;
-    await api
-      .patch("/magic-word/header/edit", { ...header })
-      .then((res) => {
-        if (res.status === 200) {
-          editElementInWordsCollection(header);
-          success = true;
-        }
-      })
-      .catch((error) => {});
+    if (newHeaderName !== "") {
+      api
+        .patch("/magic-word/header/edit", { ...header })
+        .then((res) => {
+          if (res.status === 200) {
+            editElementInWordsCollection(header);
+            success = true;
+          }
+        })
+        .catch((error) => {});
+    }
 
     return success;
   };
@@ -101,8 +103,7 @@ export const useMagicWord = () => {
     header: IMagicWordHeader
   ): boolean => {
     if (keyPressed === "Enter" && newName !== "") {
-      editHeader(newName, header);
-      return true;
+      return editHeader(newName, header);
     }
     return false;
   };
