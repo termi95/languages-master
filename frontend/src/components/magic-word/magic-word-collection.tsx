@@ -5,7 +5,7 @@ import editSquer from "../../assets/edit-squer.svg";
 import { IMagicWordHeader } from "../../app-types/MagicWordHeader";
 import { useMagicWordActionBar } from "./useMagicWord/useMagic-word-helper";
 import { useHeader } from "./MagicWordProvider";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 type Props = {
   headers: IMagicWordHeader[];
