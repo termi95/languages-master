@@ -1,0 +1,11 @@
+**/node_modules
+**/dist
+**/migrations
+**/build
+**/.dockerignore
+**/.git
+**/.gitignore
+**/Dockerfile
+**/npm-debug.log
+**/package-lock.json
+**/README.md
