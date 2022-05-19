@@ -55,7 +55,7 @@ export const MagicWordCollection = ({ headers }: Props) => {
     header: IMagicWordHeader
   ) => {
     if (editedName !== "") {
-      handleKeyDownEditName(key, editedName, header) && resetName();
+     await handleKeyDownEditName(key, editedName, header) && resetName();
     }
   };
 

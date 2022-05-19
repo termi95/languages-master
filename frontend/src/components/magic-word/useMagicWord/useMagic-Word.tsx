@@ -67,22 +67,21 @@ export const useMagicWord = () => {
     }
   };
 
-  const editHeader = (
+  const editHeader = async (
     newHeaderName: string,
     header: IMagicWordHeader
-  ): boolean => {
+  ): Promise<boolean> => {
     header.name = newHeaderName;
     let success = false;
     if (newHeaderName !== "") {
-      api
+      const res = api
         .patch("/magic-word/header/edit", { ...header })
-        .then((res) => {
-          if (res.status === 200) {
-            editElementInWordsCollection(header);
-            success = true;
-          }
-        })
-        .catch((error) => {});
+        .then((res) => res.status)
+        .catch(() => {});
+      if ((await res) === 200) {
+        editElementInWordsCollection(header);
+        success = true;
+      }
     }
 
     return success;
@@ -97,13 +96,13 @@ export const useMagicWord = () => {
     setWordsCollection([...wordsCollectionAfterCahnge]);
   };
 
-  const handleKeyDownEditName = (
+  const handleKeyDownEditName = async (
     keyPressed: string,
     newName: string,
     header: IMagicWordHeader
-  ): boolean => {
+  ): Promise<boolean> => {
     if (keyPressed === "Enter" && newName !== "") {
-      return editHeader(newName, header);
+      return await editHeader(newName, header);
     }
     return false;
   };
