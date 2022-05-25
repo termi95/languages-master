@@ -2,7 +2,7 @@ import { EntityRepository } from '@mikro-orm/core';
 import { InjectRepository } from '@mikro-orm/nestjs';
 import { Injectable } from '@nestjs/common';
 import { IMagicWordHeader } from 'src/app-types/MagicWordHeader';
-import { MagicWordHeaderDTO } from 'src/dto/magic-word-dto';
+import { MagicWordDTO, MagicWordHeaderDTO } from 'src/dto/magicWordDto';
 import { MagicWordEntity } from 'src/entities/magicWord/magicWord.entity';
 import { MagicWordHeaderEntity } from 'src/entities/magicWord/magicWordHeader.entity';
 
@@ -36,10 +36,10 @@ export class MagicWordService {
   async deleteHeader(magicWordHeader: MagicWordHeaderDTO): Promise<boolean> {
     try {
       const magicWordHeaderEntity =
-        await this.MagicWordHeaderRepository.findOne(magicWordHeader);
-      await this.MagicWordHeaderRepository.removeAndFlush(
+        await this.MagicWordHeaderRepository.findOne(magicWordHeader.id);
+      await this.MagicWordHeaderRepository.remove(
         magicWordHeaderEntity,
-      );
+      ).flush();
       return true;
     } catch (error) {
       return false;
@@ -66,5 +66,41 @@ export class MagicWordService {
       { fields: ['id', 'name', 'userId'] },
     );
     return userHeaders;
+  }
+  async getSingleHeader(headerId: number) {
+    const userHeaders = await this.MagicWordHeaderRepository.find({
+      id: headerId,
+    });
+    return userHeaders;
+  }
+  async addWord(word: MagicWordDTO): Promise<MagicWordEntity | string> {
+    try {
+      if (word.word != '') {
+        const magicWordEntity = new MagicWordEntity();
+        magicWordEntity.tranWord = word.tranWord;
+        magicWordEntity.word = word.word;
+        magicWordEntity.header = await this.MagicWordHeaderRepository.findOne(
+          word.headerId,
+        );
+        await this.MagicWordEntityRepository.persistAndFlush(magicWordEntity);
+        return magicWordEntity;
+      }
+      return 'Name cannot be empty';
+    } catch (error) {
+      return error;
+    }
+  }
+  async deleteWord(word: MagicWordDTO): Promise<boolean | string> {
+    try {
+      const magicWord = await this.MagicWordEntityRepository.findOne(word.id);
+      if (magicWord != null) {
+        await this.MagicWordEntityRepository.removeAndFlush(magicWord);
+      } else {
+        return 'Can not find word to delete';
+      }
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 }

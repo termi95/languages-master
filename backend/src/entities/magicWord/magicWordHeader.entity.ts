@@ -1,4 +1,5 @@
 import {
+  Cascade,
   Collection,
   Entity,
   OneToMany,
@@ -22,7 +23,10 @@ export class MagicWordHeaderEntity {
 
   @Property()
   createDate: Date = new Date();
-
-  @OneToMany(() => MagicWordEntity, (word) => word.header)
+  @OneToMany({
+    entity: () => MagicWordEntity,
+    mappedBy: (word) => word.header,
+    cascade: [Cascade.REMOVE],
+  })
   words = new Collection<MagicWordEntity>(this);
 }

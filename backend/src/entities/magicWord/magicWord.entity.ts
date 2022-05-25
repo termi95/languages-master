@@ -22,11 +22,9 @@ export class MagicWordEntity {
   @Property()
   createDate: Date = new Date();
 
-  @ManyToOne(() => MagicWordHeaderEntity)
+  @ManyToOne({
+    entity: () => MagicWordHeaderEntity,
+    onDelete: 'CASCADE',
+  })
   header: MagicWordHeaderEntity;
-
-  constructor(word: string, tranWord: string) {
-    this.word = word;
-    this.tranWord = tranWord;
-  }
 }

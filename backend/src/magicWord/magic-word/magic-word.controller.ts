@@ -9,7 +9,7 @@ import {
   Get,
 } from '@nestjs/common';
 import { MagicWordService } from './magic-word.service';
-import { MagicWordHeaderDTO } from '../../dto/magic-word-dto';
+import { MagicWordDTO, MagicWordHeaderDTO } from '../../dto/magicWordDto';
 import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { UserIsUserGuard } from 'src/auth/guards/userIsUser.guard';
 
@@ -29,6 +29,11 @@ export class MagicWordController {
     return await this.magicWordService.getUserHeaders(req.user.userId);
   }
   @UseGuards(JwtAuthGuard)
+  @Post('/header/get-single-header')
+  async getSingleHeader(@Body() body) {
+    return await this.magicWordService.getSingleHeader(body.data.id);
+  }
+  @UseGuards(JwtAuthGuard)
   @UseGuards(UserIsUserGuard)
   @Delete('/header/delete')
   async deleteHeader(@Body() body: MagicWordHeaderDTO) {
@@ -41,18 +46,21 @@ export class MagicWordController {
     return await this.magicWordService.modifyHeader(body);
   }
   @UseGuards(JwtAuthGuard)
+  @UseGuards(UserIsUserGuard)
   @Post('/word/add')
-  async add(@Request() req: Request) {
-    return true;
+  async add(@Body() body: MagicWordDTO) {
+    return await this.magicWordService.addWord(body);
   }
   @UseGuards(JwtAuthGuard)
+  @UseGuards(UserIsUserGuard)
   @Post('/word/modify')
   async modify(@Request() req: Request) {
     return true;
   }
   @UseGuards(JwtAuthGuard)
-  @Post('/word/delete')
-  async delete(@Request() req: Request) {
-    return true;
+  @UseGuards(UserIsUserGuard)
+  @Delete('/word/delete')
+  async delete(@Body() body: MagicWordDTO) {
+    return await this.magicWordService.deleteWord(body);
   }
 }
